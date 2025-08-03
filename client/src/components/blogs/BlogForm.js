@@ -30,7 +30,7 @@ class BlogForm extends Component {
             Cancel
           </Link>
           <button type="submit" className="teal btn-flat right white-text">
-            Next
+            <span>Next</span>
             <i className="material-icons right">done</i>
           </button>
         </form>
