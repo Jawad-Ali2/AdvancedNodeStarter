@@ -4,10 +4,22 @@ const sessionFactory = require('../factories/sessionFactory');
 
 class Page {
     static async build() {
-        const browser = await puppeteer.launch({ 
-            headless: process.env.NODE_ENV === 'ci' ? true : false,
-            args: process.env.NODE_ENV === 'ci' ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
-        });
+        const options = { 
+            headless: process.env.NODE_ENV === 'ci' ? true : false
+        };
+        
+        // In CI environment, use additional args for stability
+        if (process.env.NODE_ENV === 'ci') {
+            options.args = [
+                '--no-sandbox', 
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-web-security',
+                '--disable-features=VizDisplayCompositor'
+            ];
+        }
+        
+        const browser = await puppeteer.launch(options);
 
         const pupPage = await browser.newPage();
         const page = new Page(pupPage);

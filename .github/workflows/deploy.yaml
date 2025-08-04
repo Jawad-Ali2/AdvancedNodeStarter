@@ -36,14 +36,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
         run: |
-          # Install system dependencies for Puppeteer
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
           npm install --legacy-peer-deps
           npm run build
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+      - name: Setup Chrome/Chromium
+        uses: browser-actions/setup-chrome@latest
       - name: Start server
         run: |
           nohup npm run start &
