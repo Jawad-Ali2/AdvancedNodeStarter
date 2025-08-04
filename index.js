@@ -28,6 +28,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Health check route for CI
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', env: process.env.NODE_ENV });
+});
+
 require('./routes/authRoutes')(app);
 require('./routes/blogRoutes')(app);
 
